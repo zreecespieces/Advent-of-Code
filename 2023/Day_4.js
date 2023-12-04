@@ -268,19 +268,17 @@ function countCards(string) {
     })
 
     for (let i = 1; i <= allWinners.size; i++) {
-        const { winners, copies } = allWinners.get(i + "")
-        let copiesIterations = copies
+        let { winners, copies } = allWinners.get(i + "")
 
         // first time ever actually using a do while, sweet!
         do {
             winners.forEach((_, index) => {
                 const nextCard = index + 1 + i
                 let { winners, copies: nextCardCopies } = allWinners.get(nextCard + "")
-                nextCardCopies++
-                allWinners.set(nextCard + "", { winners, copies: nextCardCopies })
+                allWinners.set(nextCard + "", { winners, copies: nextCardCopies + 1 })
             })
-            copiesIterations--
-        } while (copiesIterations > 0)
+            copies--
+        } while (copies > 0)
     }
     
     console.log(allWinners, [...allWinners.values()].reduce((total, v) => total + v.copies, 0))
